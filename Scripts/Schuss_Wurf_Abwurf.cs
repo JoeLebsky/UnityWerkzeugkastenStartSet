@@ -1,4 +1,4 @@
-// Version 2020-11-09
+// Version 2021-07-28
 /* künftige mögliche Verbesserungen (aber eher unwichtig):
 	- ggf. Abwurfpunkt automatisch abhängig von der Größe des geworfenen Prefabs.
 	- falls kein Asset zugewiesen: irgendeins https://docs.unity3d.com/ScriptReference/AssetDatabase.FindAssets.html :-)
@@ -19,7 +19,9 @@ public class Schuss_Wurf_Abwurf : MonoBehaviour
     public bool SpieleAngehaengteSounddatei = true; // die Alternative: man setzt die Sounddatei am Objekt auf "play on awake", also "spiele beim (Objekt-)Erzeugen
 [Header("Einstellungen zur Drehung:")]
     public bool ZufaelligeDrehung = false; public bool ZufaelligeDrehungNurYAchse = false; public bool DrehungVonElternObjekt = false; public Vector3 RotationDesObjekts;
-	private GameObject abwurfPunkt;    
+	[Header("(Lebensdauer 0 heißt dauerhaft)")]
+    public float LebensdauerObjekt = 3.0F; 
+    private GameObject abwurfPunkt;    
 
 
     void Start () {
@@ -48,7 +50,8 @@ public class Schuss_Wurf_Abwurf : MonoBehaviour
             Vector3 rotationVector = new Vector3(0, Random.Range(-90.0F, 90.0F), 0); spawnRotation = Quaternion.Euler(rotationVector); }
         if (RotationDesObjekts!=Vector3.zero) { spawnRotation = Quaternion.Euler(RotationDesObjekts); }
         // Objekt erzeugen
-        GameObject flug = Instantiate(welchesObjekt, abwurfPosition, spawnRotation); 
+        GameObject flug = Instantiate(welchesObjekt, abwurfPosition, spawnRotation);
+        if (LebensdauerObjekt!=0) { Destroy (flug, LebensdauerObjekt); } 
         // falls "SchwungMitgeben" ungleich Null UND WICHTIG: Rigidbody angehängt, dann bewegen
         if (ObjektSchwungMitgeben!=Vector3.zero && flug.GetComponent<Rigidbody>() != null){ flug.GetComponent<Rigidbody>().AddRelativeForce(ObjektSchwungMitgeben, ForceMode.VelocityChange); }
         AudioSource sndObjekt = flug.GetComponent<AudioSource>();
