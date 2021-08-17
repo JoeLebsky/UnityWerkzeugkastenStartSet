@@ -1,9 +1,9 @@
-// Version 2020-11-25
+// Version 2021-08-16 (kleiner Bug behoben: )
 
-// nächste Schritte: 
-// das  Feature "Animation spielen falls vorhanden" und "Sound spielen falls vorhanden"
-// und bei "festgelegtes Objekt" auch Zerstören/Deaktivieren/Unsichtbar anbieten, ggf. weitere (Collider entfernen, etc.)
-// und ein bisschen "Refaktoring", den Code nicht doppelt für Coll/Trigger, sondern Aufruf Unterroutine mit Übergabe Koll-Objekt
+/*  nächste Schritte: 
+- das  Feature "Animation spielen falls vorhanden" und "Sound spielen falls vorhanden"
+- und bei "festgelegtes Objekt" auch Zerstören/Deaktivieren/Unsichtbar anbieten, ggf. weitere (Collider entfernen, etc.)
+-  und ein bisschen "Refaktoring", den Code nicht doppelt für Coll/Trigger, sondern Aufruf Unterroutine mit Übergabe Koll-Objekt */
 using UnityEngine; 
 
 public class KollisionEinfach : MonoBehaviour{
@@ -27,13 +27,14 @@ public string ObjekteMitDiesemTagBeeinflussen; // da kann man im Inspector einst
             if(ZerstoereAufprallobjekt==true){ Destroy(collision.gameObject); }
             if(UnsichtbarAufprObj==true) { collision.gameObject.GetComponent<MeshRenderer>().enabled = false;}
             if(DeaktAufprObj==true) { collision.gameObject.SetActive(false);}
-        }
-        if (ZerstoereDieses) { Destroy(gameObject); }
-        if (UnsichtbarDieses==true) { gameObject.GetComponent<MeshRenderer>().enabled = false; }
-		if (DeaktiviereDieses==true) { gameObject.SetActive(false); }
+        
+            if (ZerstoereDieses) { Destroy(gameObject); }
+            if (UnsichtbarDieses==true) { gameObject.GetComponent<MeshRenderer>().enabled = false; }
+            if (DeaktiviereDieses==true) { gameObject.SetActive(false); }
 
-        // falls ein anderes Objekt erzeugt werden soll (z.B. Chemie-Tutorial): Instanz erzeugen
-        if (DiesesObjektErzeugen!=null) { Instantiate(DiesesObjektErzeugen, transform.position, transform.rotation); }
+            // falls ein anderes Objekt erzeugt werden soll (z.B. Chemie-Tutorial): Instanz erzeugen
+            if (DiesesObjektErzeugen!=null) { Instantiate(DiesesObjektErzeugen, transform.position, transform.rotation); }
+        }
     }
 
     // und als Variante wenn der Collider vom Typ "Trigger" ist - siehe Anleitung (dann fährt man durch und prallt nicht ab)
@@ -43,12 +44,13 @@ public string ObjekteMitDiesemTagBeeinflussen; // da kann man im Inspector einst
             if(ZerstoereAufprallobjekt==true){ Destroy(other.gameObject); }
             if(UnsichtbarAufprObj==true) { other.gameObject.GetComponent<MeshRenderer>().enabled = false;}
             if(DeaktAufprObj==true) { other.gameObject.SetActive(false);}
-        }
-        if (ZerstoereDieses) { Destroy(gameObject); }
-        if (UnsichtbarDieses==true) { gameObject.GetComponent<MeshRenderer>().enabled = false; }
-		if (DeaktiviereDieses==true) { gameObject.SetActive(false); }
+        
+            if (ZerstoereDieses) { Destroy(gameObject); }
+            if (UnsichtbarDieses==true) { gameObject.GetComponent<MeshRenderer>().enabled = false; }
+            if (DeaktiviereDieses==true) { gameObject.SetActive(false); }
 
-        // falls ein anderes Objekt erzeugt werden soll (z.B. Chemie-Tutorial): Instanz erzeugen
-        if (DiesesObjektErzeugen!=null) { Instantiate(DiesesObjektErzeugen, transform.position, transform.rotation); }
+            // falls ein anderes Objekt erzeugt werden soll (z.B. Chemie-Tutorial): Instanz erzeugen
+            if (DiesesObjektErzeugen!=null) { Instantiate(DiesesObjektErzeugen, transform.position, transform.rotation); }
+        }
     }
 }
